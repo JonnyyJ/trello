@@ -1,3 +1,14 @@
+### Prerequisites
+What things you need to install the software.
+
+* Git.
+* PHP.
+* Composer.
+* Laravel CLI.
+* Laravel Valet (optional).
+* A webserver like Nginx or Apache.
+* A Node Package Manager ( npm or yarn ).
+
 ### Install
 Clone the git repository on your computer
 ```
