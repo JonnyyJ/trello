@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Repository\Interfaces\TaskInterface;
 use App\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+
+
+    protected $task;
+    /*constuct*/
+    public function __construct(TaskInterface $task)
+    {
+        $this->task = $task;
+    }
+
     public function index()
     {
         return response()->json(Task::all()->toArray());
@@ -14,12 +24,9 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $task = Task::create([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'user_id' => $request->user_id,
-            'order' => $request->order
-        ]);
+
+       $task=$this->task->create();
+
 
         return response()->json([
             'status' => (bool) $task,
