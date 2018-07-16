@@ -25,7 +25,12 @@ class TaskController extends Controller
     public function store(Request $request)
     {
 
-       $task=$this->task->create();
+       $task=$this->task->create([
+           'name' => $request->name,
+           'category_id' => $request->category_id,
+           'user_id' => $request->user_id,
+           'order' => $request->order
+       ]);
 
 
         return response()->json([
