@@ -19,18 +19,13 @@ class TaskController extends Controller
 
     public function index()
     {
-        return response()->json(Task::all()->toArray());
+        return $this->task->all();
     }
 
     public function store(Request $request)
     {
 
-       $task=$this->task->create([
-           'name' => $request->name,
-           'category_id' => $request->category_id,
-           'user_id' => $request->user_id,
-           'order' => $request->order
-       ]);
+       $task=$this->task->create($request->all());
 
 
         return response()->json([
@@ -40,31 +35,21 @@ class TaskController extends Controller
         ]);
     }
 
-    public function show(Task $task)
+    public function show($id)
     {
-        return response()->json($task);
+        return $this->task->show($id);
     }
 
-    public function update(Request $request, Task $task)
+    public function update(Request $request, $id)
     {
-        $status = $task->update(
-            $request->only(['name', 'category_id', 'user_id', 'order'])
-        );
+        $this->task->update($request->only($this->task->getTask()->fillable), $id);
 
-        return response()->json([
-            'status' => $status,
-            'message' => $status ? 'Task Updated!' : 'Error Updating Task'
-        ]);
+        return $this->task->find($id);
     }
 
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        $status = $task->delete();
-
-        return response()->json([
-            'status' => $status,
-            'message' => $status ? 'Task Deleted!' : 'Error Deleting Task'
-        ]);
+        return $this->task->delete($id);
     }
 
 }
